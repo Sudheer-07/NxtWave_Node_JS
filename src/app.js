@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const path = require('path');
 
 // Load environment variables
 require('dotenv').config();
@@ -25,10 +22,6 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
-
-// Load Swagger documentation
-const swaggerDocument = YAML.load(path.join(__dirname, 'docs/swagger.yaml'));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Import routes
 const userRoutes = require('./routes/user.routes');
